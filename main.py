@@ -6,6 +6,11 @@ def main():
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
+    # we put things in groups so that we can call them all at once
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updateable, drawable)
+
     
     pygame.init()
     clock = pygame.time.Clock()
@@ -17,9 +22,14 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        player.update(dt)
-        screen.fill("black")
-        player.draw(screen)
+        for i in updateable:
+            i.update(dt)
+        # clear what was drawn in previous frame and prepare for the next rendering
+        # this goes before the rendering because its assoicated with draw/rendering
+        screen.fill("black") 
+        for i in drawable:
+            i.draw(screen)
+
         pygame.display.flip()
         
         dt = (clock.tick(60)/1000)
