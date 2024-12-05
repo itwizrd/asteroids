@@ -1,4 +1,5 @@
 import pygame
+import sys
 from constants import  *
 from player import *
 from asteroid import Asteroid
@@ -31,6 +32,10 @@ def main():
                 return
         for obj in updatable:
             obj.update(dt)
+        for obj in asteroids:
+            if player.collision(obj):
+                print("Game over!")
+                sys.exit()
         # clear what was drawn in previous frame and prepare for the next rendering
         # this goes before the rendering because its assoicated with draw/rendering
         screen.fill("black") 
