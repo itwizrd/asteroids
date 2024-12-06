@@ -39,6 +39,11 @@ def main():
             if player.collision(obj):
                 print("Game over!")
                 sys.exit()
+            for bullet in shots:
+                if bullet.collision(obj):
+                    print("collide")
+                    obj.kill()
+                    bullet.kill()
         # clear what was drawn in previous frame and prepare for the next rendering
         # this goes before the rendering because its assoicated with draw/rendering
         screen.fill("black") 
